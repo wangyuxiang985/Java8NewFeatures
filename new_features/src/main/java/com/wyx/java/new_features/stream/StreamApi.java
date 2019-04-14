@@ -73,8 +73,8 @@ public class StreamApi {
             new Employee(102, "李四", 59, 6666.66),
             new Employee(101, "张三", 18, 9999.99),
             new Employee(103, "王五", 28, 3333.33),
-            new Employee(104, "赵六", 8, 7777.77),
-            new Employee(104, "赵六", 8, 7777.77),
+            new Employee(104, "赵六", 8, 3333.33),
+            new Employee(104, "赵六", 8, 8888.88),
             new Employee(104, "赵六", 8, 7777.77),
             new Employee(105, "田七", 38, 5555.55)
     );
@@ -287,7 +287,48 @@ public class StreamApi {
                 .map(Employee::getName)
                 .collect(Collectors.toCollection(HashSet::new));
         collect2.forEach(System.out :: println);
+        System.out.println("##################");
+        Optional<Double> collect3 = emps.stream()
+                .map(Employee::getMoney)
+                .collect(Collectors.maxBy(Double::compare));
+        System.out.println("集合中最有钱的员工是:"+collect3.get());
+    }
 
+    //分组
+    @Test
+    public void test13(){
+        Map<Integer, List<Employee>> collect = emps.stream()
+                .collect(Collectors.groupingBy(Employee::getAge));
+        System.out.println(collect);
+    }
+
+    //多级分组
+    @Test
+    public void test14(){
+        Map<Integer, Map<String, List<Employee>>> collect = emps.stream()
+                .collect(Collectors.groupingBy(Employee::getAge, Collectors.groupingBy(emp -> {
+                    if (emp.getMoney() >= 8000) {
+                        return "小康";
+                    } else if (emp.getMoney() >= 5000) {
+                        return "温饱";
+                    } else {
+                        return "贫困";
+                    }
+                })));
+        System.out.println(collect);
+    }
+
+    //分区
+    @Test
+    public void test15(){
+        Map<Boolean, List<Employee>> collect = emps.stream()
+                .collect(Collectors.partitioningBy(emp -> emp.getMoney() >= 5000));
+        System.out.println(collect);
+        System.out.println("##################");
+        Optional<Double> collect1 = emps.stream()
+                .map(Employee::getMoney)
+                .collect(Collectors.reducing(Double::sum));
+        System.out.println(collect1.get());
     }
 
 
