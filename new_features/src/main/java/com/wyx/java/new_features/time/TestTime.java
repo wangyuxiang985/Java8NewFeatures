@@ -114,4 +114,36 @@ public class TestTime {
         System.out.println(pe.getMonths());
         System.out.println(pe.getDays());
     }
+
+    //Instant : 时间戳。 （使用 Unix 元年 1970年1月1日 00:00:00 所经历的毫秒值）
+    @Test
+    public void test6(){
+        Instant now = Instant.now();
+        System.out.println(now);
+        OffsetDateTime offsetDateTime = now.atOffset(ZoneOffset.ofHours(8));
+        System.out.println(offsetDateTime);
+        System.out.println(now.getNano());
+
+        Instant instant = Instant.ofEpochSecond(5);
+        System.out.println(instant);
+    }
+
+    //LocalDate、LocalTime、LocalDateTime
+    @Test
+    public void test7(){
+        LocalDateTime now = LocalDateTime.now();
+        System.out.println(now);
+        LocalDateTime of = LocalDateTime.of(2018, 8, 8, 8, 8, 8);
+        System.out.println(of);
+        LocalDateTime localDateTime = of.plusYears(10L);
+        System.out.println(localDateTime);
+        LocalDateTime localDateTime1 = of.minusMonths(3L);
+        System.out.println(localDateTime1);
+
+        System.out.println(now.getYear());
+        System.out.println(now.getMonth());
+        System.out.println(now.getMonthValue());
+        System.out.println(now.getDayOfMonth());
+        System.out.println(now.getHour());
+    }
 }
